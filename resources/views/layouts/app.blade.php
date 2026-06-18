@@ -8,57 +8,65 @@
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
-<body class="bg-gray-100 min-h-screen" x-data="{ sidebarOpen: false }">
-    <div class="flex min-h-screen">
-        {{-- Sidebar --}}
-        <x-sidebar />
+<body class="bg-[#EEF2F7] min-h-screen" x-data="{ sidebarOpen: false }">
+    {{-- Sidebar --}}
+    <x-sidebar />
 
-        {{-- Main Content --}}
-        <div class="flex-1 flex flex-col min-h-screen lg:ml-64">
-            {{-- Top Navbar --}}
-            <nav class="bg-white shadow-sm border-b border-gray-200 sticky top-0 z-20">
-                <div class="px-4 sm:px-6 lg:px-8">
-                    <div class="flex justify-between h-16">
-                        <div class="flex items-center">
-                            {{-- Mobile hamburger button --}}
-                            <button @click="sidebarOpen = !sidebarOpen" class="lg:hidden p-2 rounded-md text-gray-600 hover:text-gray-900 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-indigo-500" aria-label="Toggle sidebar">
-                                <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
-                                </svg>
-                            </button>
-                            <span class="ml-2 text-lg font-semibold text-gray-800 lg:hidden">{{ config('app.name', 'SIM PDAM Desa') }}</span>
+    {{-- Mobile sidebar overlay --}}
+    <div x-show="sidebarOpen"
+         x-cloak
+         @click="sidebarOpen = false"
+         class="fixed inset-0 bg-black/50 z-30 lg:hidden"
+         x-transition:enter="transition-opacity ease-linear duration-300"
+         x-transition:enter-start="opacity-0"
+         x-transition:enter-end="opacity-100"
+         x-transition:leave="transition-opacity ease-linear duration-300"
+         x-transition:leave-start="opacity-100"
+         x-transition:leave-end="opacity-0"></div>
+
+    {{-- Main Content --}}
+    <div class="flex flex-col min-h-screen lg:ml-64">
+        {{-- Topbar --}}
+        <header class="sticky top-0 z-20 h-14 bg-white border-b border-[#E2E8F0]">
+            <div class="flex items-center justify-between h-full px-4 sm:px-6 lg:px-8">
+                <div class="flex items-center gap-3 min-w-0">
+                    {{-- Mobile hamburger --}}
+                    <button @click="sidebarOpen = true" class="lg:hidden p-2 -ml-2 rounded-lg text-[#64748B] hover:bg-[#EEF2F7] focus:outline-none" aria-label="Buka menu">
+                        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                        </svg>
+                    </button>
+                    <h1 class="text-base sm:text-lg font-semibold text-[#1A3A5C] truncate">@yield('title', 'Dashboard')</h1>
+                </div>
+
+                <div class="flex items-center gap-2 sm:gap-4">
+                    {{-- Notifikasi --}}
+                    <a href="{{ url('/pengaduan') }}" class="relative p-2 rounded-lg text-[#64748B] hover:bg-[#EEF2F7] transition-colors" title="Notifikasi" aria-label="Notifikasi">
+                        <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
+                        </svg>
+                    </a>
+
+                    {{-- Avatar --}}
+                    <div class="flex items-center gap-3">
+                        <div class="text-right hidden sm:block leading-tight">
+                            <p class="text-sm font-medium text-[#1A3A5C]">{{ auth()->user()->name }}</p>
+                            <p class="text-xs text-[#64748B] capitalize">{{ auth()->user()->role }}</p>
                         </div>
-
-                        {{-- User Info --}}
-                        <div class="flex items-center space-x-4">
-                            <div class="text-right hidden sm:block">
-                                <p class="text-sm font-medium text-gray-700">{{ auth()->user()->name }}</p>
-                                <p class="text-xs text-gray-500 capitalize">{{ auth()->user()->role }}</p>
-                            </div>
-                            <form method="POST" action="{{ url('/logout') }}">
-                                @csrf
-                                <button type="submit" class="inline-flex items-center px-3 py-2 text-sm font-medium text-red-600 hover:text-red-800 hover:bg-red-50 rounded-md transition-colors">
-                                    <svg class="w-4 h-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
-                                    </svg>
-                                    Logout
-                                </button>
-                            </form>
+                        <div class="w-9 h-9 rounded-full bg-[#1A3A5C] flex items-center justify-center">
+                            <span class="text-sm font-semibold text-white">{{ strtoupper(substr(auth()->user()->name, 0, 1)) }}</span>
                         </div>
                     </div>
                 </div>
-            </nav>
+            </div>
+        </header>
 
-            {{-- Page Content --}}
-            <main class="flex-1 p-4 sm:p-6 lg:p-8">
-                <x-alert />
-                @yield('content')
-            </main>
-        </div>
+        {{-- Page Content --}}
+        <main class="flex-1 p-4 sm:p-6 lg:p-8">
+            <x-alert />
+            @yield('content')
+        </main>
     </div>
-
-    {{-- Mobile sidebar overlay --}}
-    <div x-show="sidebarOpen" @click="sidebarOpen = false" class="fixed inset-0 bg-black bg-opacity-50 z-30 lg:hidden" x-transition:enter="transition-opacity ease-linear duration-300" x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100" x-transition:leave="transition-opacity ease-linear duration-300" x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0"></div>
 
     @stack('scripts')
 </body>

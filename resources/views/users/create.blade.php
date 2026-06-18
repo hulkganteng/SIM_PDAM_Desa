@@ -4,11 +4,11 @@
 
 @section('content')
     <div class="mb-6">
-        <h1 class="text-2xl font-bold text-gray-800">Tambah Pengguna</h1>
-        <p class="text-gray-500 mt-1">Buat akun pengguna baru</p>
+        <h1 class="gov-page-title">Tambah Pengguna</h1>
+        <p class="text-sm text-gray-500 mt-1">Buat akun pengguna baru</p>
     </div>
 
-    <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+    <div class="gov-card p-6 max-w-2xl">
         <form method="POST" action="{{ url('/users') }}">
             @csrf
 
@@ -28,13 +28,9 @@
                 <option value="pelanggan" {{ old('role') === 'pelanggan' ? 'selected' : '' }}>Pelanggan</option>
             </x-form-group>
 
-            <div class="flex items-center space-x-3 pt-4">
-                <button type="submit" class="inline-flex items-center px-4 py-2 bg-indigo-600 text-white text-sm font-medium rounded-md hover:bg-indigo-700 transition-colors">
-                    Simpan
-                </button>
-                <a href="{{ url('/users') }}" class="inline-flex items-center px-4 py-2 bg-gray-200 text-gray-700 text-sm font-medium rounded-md hover:bg-gray-300 transition-colors">
-                    Batal
-                </a>
+            <div class="flex items-center gap-3 pt-4">
+                <button type="submit" class="gov-btn-primary">Simpan</button>
+                <a href="{{ url('/users') }}" class="gov-btn-secondary">Batal</a>
             </div>
         </form>
     </div>

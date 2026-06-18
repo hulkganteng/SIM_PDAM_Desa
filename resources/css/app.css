@@ -1,7 +1,208 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
+@plugin "@tailwindcss/forms";
+
+/*
+|--------------------------------------------------------------------------
+| Clean Government Theme - SIM PDAM Desa
+|--------------------------------------------------------------------------
+| Palet warna tema pemerintahan yang bersih dan profesional.
+| Token di bawah ini tersedia sebagai utility Tailwind, mis. bg-gov-primary,
+| text-gov-muted, border-gov-border, dsb.
+*/
+@theme {
+    /* Palet utama */
+    --color-gov-primary: #1A3A5C;      /* navy gelap  -> sidebar, header, aksen utama */
+    --color-gov-primary-dark: #0F2740; /* hover navy gelap */
+    --color-gov-primary-soft: #2D5A8A; /* nav item aktif / hover */
+    --color-gov-accent: #4FC3F7;       /* biru muda   -> logo bg, badge aktif, highlight */
+    --color-gov-accent-soft: #93C5FD;  /* teks nav non-aktif */
+    --color-gov-surface: #FFFFFF;      /* card, form, tabel */
+    --color-gov-bg: #EEF2F7;           /* latar halaman */
+    --color-gov-border: #E2E8F0;       /* garis card / tabel */
+    --color-gov-text: #1A3A5C;         /* teks utama */
+    --color-gov-muted: #64748B;        /* teks muted */
+
+    /* Remap skala "indigo" bawaan ke tema pemerintahan supaya halaman lama
+       yang masih memakai indigo-* otomatis mengikuti tema. */
+    --color-indigo-50: #EEF2F7;
+    --color-indigo-100: #DCE6F0;
+    --color-indigo-200: #B8CCE0;
+    --color-indigo-300: #93C5FD;
+    --color-indigo-400: #4FC3F7;
+    --color-indigo-500: #2D5A8A;
+    --color-indigo-600: #1A3A5C;
+    --color-indigo-700: #0F2740;
+    --color-indigo-800: #0F2740;
+    --color-indigo-900: #0A1C2E;
+}
 
 [x-cloak] {
     display: none !important;
+}
+
+/* Custom scrollbar untuk sidebar gelap */
+.sidebar-scroll {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(255, 255, 255, 0.15) transparent;
+}
+.sidebar-scroll::-webkit-scrollbar {
+    width: 6px;
+}
+.sidebar-scroll::-webkit-scrollbar-track {
+    background: transparent;
+}
+.sidebar-scroll::-webkit-scrollbar-thumb {
+    background-color: rgba(255, 255, 255, 0.15);
+    border-radius: 3px;
+}
+.sidebar-scroll::-webkit-scrollbar-thumb:hover {
+    background-color: rgba(255, 255, 255, 0.3);
+}
+
+@layer base {
+    body {
+        background-color: var(--color-gov-bg);
+        color: #374151;
+        font-family: 'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+    }
+}
+
+@layer components {
+    /* ===== Card ===== */
+    .gov-card {
+        background-color: var(--color-gov-surface);
+        border: 1px solid var(--color-gov-border);
+        border-radius: 0.75rem; /* rounded-xl */
+    }
+
+    /* ===== Tipografi ===== */
+    .gov-page-title {
+        font-size: 1.125rem;   /* text-lg */
+        line-height: 1.75rem;
+        font-weight: 600;
+        color: var(--color-gov-primary);
+    }
+    .gov-section-title {
+        font-size: 0.875rem;   /* text-sm */
+        line-height: 1.25rem;
+        font-weight: 600;
+        color: var(--color-gov-primary);
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+    }
+
+    /* ===== Tombol ===== */
+    .gov-btn-primary {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+        background-color: var(--color-gov-primary);
+        color: #ffffff;
+        padding: 0.625rem 1.25rem;   /* py-2.5 px-5 */
+        border-radius: 0.5rem;       /* rounded-lg */
+        font-size: 0.875rem;
+        font-weight: 500;
+        transition: background-color .15s ease;
+    }
+    .gov-btn-primary:hover { background-color: var(--color-gov-primary-dark); }
+
+    .gov-btn-secondary {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+        border: 1px solid var(--color-gov-primary);
+        color: var(--color-gov-primary);
+        background-color: transparent;
+        padding: 0.625rem 1.25rem;
+        border-radius: 0.5rem;
+        font-size: 0.875rem;
+        font-weight: 500;
+        transition: background-color .15s ease;
+    }
+    .gov-btn-secondary:hover { background-color: var(--color-gov-bg); }
+
+    .gov-btn-danger {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+        background-color: #dc2626;
+        color: #ffffff;
+        padding: 0.625rem 1.25rem;
+        border-radius: 0.5rem;
+        font-size: 0.875rem;
+        font-weight: 500;
+        transition: background-color .15s ease;
+    }
+    .gov-btn-danger:hover { background-color: #b91c1c; }
+
+    /* ===== Form ===== */
+    .gov-label {
+        display: block;
+        font-size: 0.875rem;
+        font-weight: 500;
+        color: var(--color-gov-primary);
+        margin-bottom: 0.25rem;
+    }
+    .gov-input {
+        width: 100%;
+        border: 1px solid #d1d5db;       /* border-gray-300 */
+        border-radius: 0.5rem;           /* rounded-lg */
+        padding: 0.625rem 0.875rem;      /* py-2.5 px-3.5 */
+        font-size: 0.875rem;
+        background-color: #ffffff;
+        transition: border-color .15s ease, box-shadow .15s ease;
+    }
+    .gov-input:focus {
+        outline: none;
+        border-color: var(--color-gov-primary);
+        box-shadow: 0 0 0 2px var(--color-gov-accent);
+    }
+    .gov-input-error {
+        border-color: #f87171;            /* border-red-400 */
+        background-color: #fef2f2;        /* bg-red-50 */
+    }
+    .gov-error-text {
+        color: #dc2626;
+        font-size: 0.75rem;
+        margin-top: 0.25rem;
+    }
+
+    /* ===== Badge status ===== */
+    .gov-badge {
+        display: inline-flex;
+        align-items: center;
+        padding: 0.125rem 0.625rem;
+        border-radius: 9999px;
+        font-size: 0.75rem;
+        font-weight: 500;
+    }
+    .gov-badge-success { background-color: #d1fae5; color: #065f46; } /* emerald */
+    .gov-badge-warning { background-color: #fef3c7; color: #92400e; } /* amber */
+    .gov-badge-danger  { background-color: #fee2e2; color: #991b1b; } /* red */
+    .gov-badge-info    { background-color: #dbeafe; color: #1e40af; } /* blue */
+
+    /* ===== Tabel data ===== */
+    .gov-table { width: 100%; border-collapse: collapse; }
+    .gov-table thead th {
+        background-color: #F8FAFC;
+        color: var(--color-gov-primary);
+        font-weight: 600;
+        font-size: 0.75rem;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        text-align: left;
+        padding: 0.875rem 1.25rem;       /* py-3.5 px-5 */
+    }
+    .gov-table tbody td {
+        padding: 0.875rem 1.25rem;
+        font-size: 0.875rem;
+        border-bottom: 1px solid #f3f4f6; /* border-gray-100 */
+    }
+    .gov-table tbody tr { transition: background-color .15s ease; }
+    .gov-table tbody tr:hover { background-color: #F8FAFC; }
 }

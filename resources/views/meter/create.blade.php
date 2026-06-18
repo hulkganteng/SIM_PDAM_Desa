@@ -4,11 +4,11 @@
 
 @section('content')
     <div class="mb-6">
-        <h1 class="text-2xl font-bold text-gray-800">Catat Meter</h1>
-        <p class="text-gray-500 mt-1">Input pencatatan meter pelanggan</p>
+        <h1 class="gov-page-title">Catat Meter</h1>
+        <p class="text-sm text-gray-500 mt-1">Input pencatatan meter pelanggan</p>
     </div>
 
-    <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+    <div class="gov-card p-6 max-w-2xl">
         <form method="POST" action="{{ url('/meter') }}" enctype="multipart/form-data">
             @csrf
 
@@ -29,27 +29,23 @@
 
             {{-- Pemakaian Preview --}}
             <div class="mb-4">
-                <label class="block text-sm font-medium text-gray-700 mb-1">Pemakaian (m³)</label>
-                <div id="pemakaian-preview" class="block w-full rounded-md border border-gray-300 bg-gray-100 px-3 py-2 text-sm text-gray-900 font-medium">
+                <label class="gov-label">Pemakaian (m³)</label>
+                <div id="pemakaian-preview" class="w-full rounded-lg border border-gray-300 bg-[#F8FAFC] px-3.5 py-2.5 text-sm text-[#1A3A5C] font-medium">
                     0
                 </div>
             </div>
 
             <div class="mb-4">
-                <label for="foto" class="block text-sm font-medium text-gray-700 mb-1">Foto Meter</label>
-                <input type="file" id="foto" name="foto" accept="image/*" class="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-medium file:bg-indigo-50 file:text-indigo-700 hover:file:bg-indigo-100">
+                <label for="foto" class="gov-label">Foto Meter</label>
+                <input type="file" id="foto" name="foto" accept="image/*" class="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-medium file:bg-[#EEF2F7] file:text-[#1A3A5C] hover:file:bg-[#DCE6F0]">
                 @error('foto')
-                    <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                    <p class="gov-error-text">{{ $message }}</p>
                 @enderror
             </div>
 
-            <div class="flex items-center space-x-3 pt-4">
-                <button type="submit" class="inline-flex items-center px-4 py-2 bg-indigo-600 text-white text-sm font-medium rounded-md hover:bg-indigo-700 transition-colors">
-                    Simpan
-                </button>
-                <a href="{{ url('/meter') }}" class="inline-flex items-center px-4 py-2 bg-gray-200 text-gray-700 text-sm font-medium rounded-md hover:bg-gray-300 transition-colors">
-                    Batal
-                </a>
+            <div class="flex items-center gap-3 pt-4">
+                <button type="submit" class="gov-btn-primary">Simpan</button>
+                <a href="{{ url('/meter') }}" class="gov-btn-secondary">Batal</a>
             </div>
         </form>
     </div>
@@ -68,7 +64,7 @@
             const pemakaian = akhir - awal;
             preview.textContent = pemakaian >= 0 ? pemakaian + ' m³' : 'Invalid (meter akhir < awal)';
             preview.classList.toggle('text-red-600', pemakaian < 0);
-            preview.classList.toggle('text-gray-900', pemakaian >= 0);
+            preview.classList.toggle('text-[#1A3A5C]', pemakaian >= 0);
         }
 
         meterAwal.addEventListener('input', updatePemakaian);

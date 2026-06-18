@@ -76,15 +76,15 @@
         }
         .no-print button {
             padding: 10px 30px;
-            background: #4f46e5;
+            background: #1A3A5C;
             color: white;
             border: none;
-            border-radius: 5px;
+            border-radius: 8px;
             cursor: pointer;
             font-size: 14px;
         }
         .no-print button:hover {
-            background: #4338ca;
+            background: #0F2740;
         }
         @media print {
             .no-print {

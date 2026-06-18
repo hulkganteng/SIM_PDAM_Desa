@@ -4,45 +4,43 @@
 
 @section('content')
     <div class="mb-6">
-        <h1 class="text-2xl font-bold text-gray-800">Riwayat Pembayaran</h1>
-        <p class="text-gray-500 mt-1">Histori pembayaran tagihan air Anda</p>
+        <h1 class="gov-page-title">Riwayat Pembayaran</h1>
+        <p class="text-sm text-gray-500 mt-1">Histori pembayaran tagihan air Anda</p>
     </div>
 
-    <div class="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
+    <div class="gov-card overflow-hidden">
         <div class="overflow-x-auto">
-            <table class="min-w-full divide-y divide-gray-200">
-                <thead class="bg-gray-50">
+            <table class="gov-table min-w-full">
+                <thead>
                     <tr>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Tanggal</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">No Kuitansi</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Periode</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Jumlah</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Metode</th>
+                        <th>Tanggal</th>
+                        <th>No Kuitansi</th>
+                        <th>Periode</th>
+                        <th>Jumlah</th>
+                        <th>Metode</th>
                     </tr>
                 </thead>
-                <tbody class="bg-white divide-y divide-gray-200">
+                <tbody>
                     @forelse($pembayaran as $p)
-                        <tr class="even:bg-gray-50 hover:bg-gray-100 transition-colors">
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600">{{ $p->tanggal->format('d/m/Y') }}</td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm font-mono text-gray-900">{{ $p->no_kuitansi }}</td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600">{{ $p->tagihan->periode ?? '-' }}</td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Rp {{ number_format($p->jumlah, 0, ',', '.') }}</td>
-                            <td class="px-6 py-4 whitespace-nowrap">
-                                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800 capitalize">
-                                    {{ $p->metode }}
-                                </span>
+                        <tr>
+                            <td class="text-gray-600 whitespace-nowrap">{{ $p->tanggal->format('d/m/Y') }}</td>
+                            <td class="font-mono text-[#1A3A5C] whitespace-nowrap">{{ $p->no_kuitansi }}</td>
+                            <td class="text-gray-600 whitespace-nowrap">{{ $p->tagihan->periode ?? '-' }}</td>
+                            <td class="font-medium text-[#1A3A5C] whitespace-nowrap">Rp {{ number_format($p->jumlah, 0, ',', '.') }}</td>
+                            <td class="whitespace-nowrap">
+                                <span class="gov-badge gov-badge-info capitalize">{{ $p->metode }}</span>
                             </td>
                         </tr>
                     @empty
                         <tr>
-                            <td colspan="5" class="px-6 py-4 text-center text-gray-500">Belum ada riwayat pembayaran.</td>
+                            <td colspan="5" class="text-center text-gray-500">Belum ada riwayat pembayaran.</td>
                         </tr>
                     @endforelse
                 </tbody>
             </table>
         </div>
         @if($pembayaran->hasPages())
-            <div class="px-6 py-3 border-t border-gray-200">
+            <div class="bg-[#F8FAFC] px-5 py-3 border-t border-[#E2E8F0]">
                 {{ $pembayaran->links() }}
             </div>
         @endif

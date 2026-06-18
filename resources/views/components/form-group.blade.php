@@ -1,7 +1,7 @@
 @props(['label', 'name', 'type' => 'text', 'value' => null, 'placeholder' => '', 'required' => false, 'disabled' => false])
 
 <div class="mb-4">
-    <label for="{{ $name }}" class="block text-sm font-medium text-gray-700 mb-1">
+    <label for="{{ $name }}" class="gov-label">
         {{ $label }}
         @if($required)
             <span class="text-red-500">*</span>
@@ -16,7 +16,7 @@
             placeholder="{{ $placeholder }}"
             {{ $required ? 'required' : '' }}
             {{ $disabled ? 'disabled' : '' }}
-            class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm @error($name) border-red-300 text-red-900 focus:border-red-500 focus:ring-red-500 @enderror {{ $disabled ? 'bg-gray-100' : '' }}"
+            class="gov-input @error($name) gov-input-error @enderror {{ $disabled ? 'bg-gray-100 cursor-not-allowed' : '' }}"
             {{ $attributes }}
         >{{ old($name, $value) }}</textarea>
     @elseif($type === 'select')
@@ -25,7 +25,7 @@
             name="{{ $name }}"
             {{ $required ? 'required' : '' }}
             {{ $disabled ? 'disabled' : '' }}
-            class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm @error($name) border-red-300 text-red-900 focus:border-red-500 focus:ring-red-500 @enderror {{ $disabled ? 'bg-gray-100' : '' }}"
+            class="gov-input @error($name) gov-input-error @enderror {{ $disabled ? 'bg-gray-100 cursor-not-allowed' : '' }}"
             {{ $attributes }}
         >
             {{ $slot }}
@@ -39,12 +39,12 @@
             placeholder="{{ $placeholder }}"
             {{ $required ? 'required' : '' }}
             {{ $disabled ? 'disabled' : '' }}
-            class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm @error($name) border-red-300 text-red-900 focus:border-red-500 focus:ring-red-500 @enderror {{ $disabled ? 'bg-gray-100' : '' }}"
+            class="gov-input @error($name) gov-input-error @enderror {{ $disabled ? 'bg-gray-100 cursor-not-allowed' : '' }}"
             {{ $attributes }}
         />
     @endif
 
     @error($name)
-        <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+        <p class="gov-error-text">{{ $message }}</p>
     @enderror
 </div>

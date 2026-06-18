@@ -4,11 +4,11 @@
 
 @section('content')
     <div class="mb-6">
-        <h1 class="text-2xl font-bold text-gray-800">Edit Pengguna</h1>
-        <p class="text-gray-500 mt-1">Ubah data pengguna: {{ $user->name }}</p>
+        <h1 class="gov-page-title">Edit Pengguna</h1>
+        <p class="text-sm text-gray-500 mt-1">Ubah data pengguna: {{ $user->name }}</p>
     </div>
 
-    <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+    <div class="gov-card p-6 max-w-2xl">
         <form method="POST" action="{{ url('/users/' . $user->id) }}">
             @csrf
             @method('PUT')
@@ -29,13 +29,9 @@
                 <option value="nonaktif" {{ old('status', $user->status) === 'nonaktif' ? 'selected' : '' }}>Nonaktif</option>
             </x-form-group>
 
-            <div class="flex items-center space-x-3 pt-4">
-                <button type="submit" class="inline-flex items-center px-4 py-2 bg-indigo-600 text-white text-sm font-medium rounded-md hover:bg-indigo-700 transition-colors">
-                    Perbarui
-                </button>
-                <a href="{{ url('/users') }}" class="inline-flex items-center px-4 py-2 bg-gray-200 text-gray-700 text-sm font-medium rounded-md hover:bg-gray-300 transition-colors">
-                    Batal
-                </a>
+            <div class="flex items-center gap-3 pt-4">
+                <button type="submit" class="gov-btn-primary">Perbarui</button>
+                <a href="{{ url('/users') }}" class="gov-btn-secondary">Batal</a>
             </div>
         </form>
     </div>

@@ -19,7 +19,7 @@
          x-transition:leave-start="opacity-100"
          x-transition:leave-end="opacity-0"
          @click="open = false"
-         class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity">
+         class="fixed inset-0 bg-[#1A3A5C]/60 transition-opacity">
     </div>
 
     {{-- Modal Panel --}}
@@ -31,7 +31,7 @@
              x-transition:leave="ease-in duration-200"
              x-transition:leave-start="opacity-100 translate-y-0 sm:scale-100"
              x-transition:leave-end="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
-             class="relative bg-white rounded-lg shadow-xl w-full max-w-md transform transition-all">
+             class="relative bg-white rounded-xl shadow-xl w-full max-w-md transform transition-all">
 
             <div class="p-6">
                 {{-- Icon --}}
@@ -42,15 +42,15 @@
                 </div>
 
                 {{-- Title --}}
-                <h3 id="modal-title-{{ $id }}" class="text-lg font-semibold text-gray-900 text-center">{{ $title }}</h3>
+                <h3 id="modal-title-{{ $id }}" class="text-lg font-semibold text-[#1A3A5C] text-center">{{ $title }}</h3>
 
                 {{-- Message --}}
                 <p class="mt-2 text-sm text-gray-500 text-center">{{ $message }}</p>
             </div>
 
             {{-- Actions --}}
-            <div class="bg-gray-50 px-6 py-4 rounded-b-lg flex justify-end space-x-3">
-                <button @click="open = false" type="button" class="inline-flex items-center px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+            <div class="bg-[#F8FAFC] px-6 py-4 rounded-b-xl flex justify-end gap-3">
+                <button @click="open = false" type="button" class="gov-btn-secondary">
                     Batal
                 </button>
                 {{ $slot }}

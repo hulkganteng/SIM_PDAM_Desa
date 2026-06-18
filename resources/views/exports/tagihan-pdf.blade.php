@@ -47,7 +47,7 @@
             font-size: 11px;
         }
         table th {
-            background-color: #2563eb;
+            background-color: #1A3A5C;
             color: #fff;
             font-weight: bold;
         }

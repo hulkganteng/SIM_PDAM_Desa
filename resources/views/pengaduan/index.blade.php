@@ -4,73 +4,70 @@
 
 @section('content')
     <div class="flex justify-between items-center mb-6">
-        <h1 class="text-2xl font-bold text-gray-800">Data Pengaduan</h1>
+        <h1 class="gov-page-title">Data Pengaduan</h1>
     </div>
 
     {{-- Status Filter --}}
-    <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-4 mb-6">
+    <div class="gov-card p-4 mb-6">
         <form method="GET" action="{{ url('/pengaduan') }}" class="flex flex-col sm:flex-row gap-3">
-            <div>
-                <select name="status" class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
+            <div class="sm:w-48">
+                <select name="status" class="gov-input">
                     <option value="">Semua Status</option>
                     <option value="baru" {{ request('status') === 'baru' ? 'selected' : '' }}>Baru</option>
                     <option value="diproses" {{ request('status') === 'diproses' ? 'selected' : '' }}>Diproses</option>
                     <option value="selesai" {{ request('status') === 'selesai' ? 'selected' : '' }}>Selesai</option>
                 </select>
             </div>
-            <button type="submit" class="inline-flex items-center px-4 py-2 bg-indigo-600 text-white text-sm font-medium rounded-md hover:bg-indigo-700 transition-colors">
-                Filter
-            </button>
+            <button type="submit" class="gov-btn-primary">Filter</button>
         </form>
     </div>
 
-    <div class="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
+    <div class="gov-card overflow-hidden">
         <div class="overflow-x-auto">
-            <table class="min-w-full divide-y divide-gray-200">
-                <thead class="bg-gray-50">
+            <table class="gov-table min-w-full">
+                <thead>
                     <tr>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Pelanggan</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Kategori</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Deskripsi</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Tanggal</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Aksi</th>
+                        <th>Pelanggan</th>
+                        <th>Kategori</th>
+                        <th>Deskripsi</th>
+                        <th>Status</th>
+                        <th>Tanggal</th>
+                        <th>Aksi</th>
                     </tr>
                 </thead>
-                <tbody class="bg-white divide-y divide-gray-200">
+                <tbody>
                     @forelse($pengaduan as $p)
-                        <tr class="even:bg-gray-50 hover:bg-gray-100 transition-colors">
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ $p->pelanggan->nama ?? '-' }}</td>
-                            <td class="px-6 py-4 whitespace-nowrap">
-                                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-indigo-100 text-indigo-800 capitalize">
-                                    {{ str_replace('_', ' ', $p->kategori) }}
-                                </span>
+                        <tr>
+                            <td class="text-[#1A3A5C] font-medium whitespace-nowrap">{{ $p->pelanggan->nama ?? '-' }}</td>
+                            <td class="whitespace-nowrap">
+                                <span class="gov-badge bg-[#DCE6F0] text-[#1A3A5C] capitalize">{{ str_replace('_', ' ', $p->kategori) }}</span>
                             </td>
-                            <td class="px-6 py-4 text-sm text-gray-600 max-w-xs truncate">{{ Str::limit($p->deskripsi, 50) }}</td>
-                            <td class="px-6 py-4 whitespace-nowrap">
-                                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium
-                                    @if($p->status === 'baru') bg-yellow-100 text-yellow-800
-                                    @elseif($p->status === 'diproses') bg-blue-100 text-blue-800
-                                    @else bg-green-100 text-green-800
-                                    @endif">
-                                    {{ ucfirst($p->status) }}
-                                </span>
+                            <td class="text-gray-600 max-w-xs truncate">{{ Str::limit($p->deskripsi, 50) }}</td>
+                            <td class="whitespace-nowrap">
+                                @php
+                                    $pengaduanBadge = match($p->status) {
+                                        'selesai' => 'gov-badge-success',
+                                        'diproses' => 'gov-badge-info',
+                                        default => 'gov-badge-danger',
+                                    };
+                                @endphp
+                                <span class="gov-badge {{ $pengaduanBadge }}">{{ ucfirst($p->status) }}</span>
                             </td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600">{{ $p->tanggal->format('d/m/Y') }}</td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm">
-                                <a href="{{ url('/pengaduan/' . $p->id) }}" class="text-indigo-600 hover:text-indigo-900">Detail</a>
+                            <td class="text-gray-600 whitespace-nowrap">{{ $p->tanggal->format('d/m/Y') }}</td>
+                            <td class="whitespace-nowrap">
+                                <a href="{{ url('/pengaduan/' . $p->id) }}" class="text-[#1A3A5C] font-medium hover:underline">Detail</a>
                             </td>
                         </tr>
                     @empty
                         <tr>
-                            <td colspan="6" class="px-6 py-4 text-center text-gray-500">Belum ada data pengaduan.</td>
+                            <td colspan="6" class="text-center text-gray-500">Belum ada data pengaduan.</td>
                         </tr>
                     @endforelse
                 </tbody>
             </table>
         </div>
         @if($pengaduan->hasPages())
-            <div class="px-6 py-3 border-t border-gray-200">
+            <div class="bg-[#F8FAFC] px-5 py-3 border-t border-[#E2E8F0]">
                 {{ $pengaduan->links() }}
             </div>
         @endif
