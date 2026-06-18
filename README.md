@@ -1,60 +1,202 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# SIM PDAM Desa
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Sistem Informasi Manajemen PDAM Desa berbasis Laravel untuk membantu pengelolaan pelanggan, pencatatan meter air, pembuatan tagihan, pembayaran, pengaduan, dan laporan operasional.
 
-## About Laravel
+## Fitur Utama
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+- Autentikasi dan pembagian hak akses berdasarkan role: admin, petugas, kasir, dan pelanggan.
+- Dashboard ringkasan pelanggan aktif, pendapatan bulanan, tagihan belum bayar, pengaduan terbuka, dan progress pencatatan meter.
+- Manajemen user, pelanggan, dan golongan tarif.
+- Pencatatan meter pelanggan per periode, termasuk upload foto meter.
+- Generate tagihan otomatis berdasarkan pemakaian dan golongan tarif.
+- Penerapan denda untuk tagihan yang melewati jatuh tempo.
+- Proses pembayaran tagihan dan cetak kuitansi.
+- Modul pengaduan pelanggan dengan alur status baru, diproses, dan selesai.
+- Portal pelanggan untuk melihat tagihan, riwayat pembayaran, pengaduan, dan profil.
+- Laporan pelanggan, tagihan, dan pembayaran dengan export PDF/Excel.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Teknologi
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+- PHP 8.2+
+- Laravel 12
+- SQLite/MySQL
+- Blade Template
+- Tailwind CSS
+- Vite
+- Laravel DomPDF
+- Laravel Excel
+- Pest/PHPUnit
 
-## Learning Laravel
+## Kebutuhan Sistem
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework. You can also check out [Laravel Learn](https://laravel.com/learn), where you will be guided through building a modern Laravel application.
+Pastikan perangkat sudah memiliki:
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+- PHP 8.2 atau lebih baru
+- Composer
+- Node.js dan npm
+- SQLite atau MySQL
+- Ekstensi PHP umum Laravel, seperti `pdo`, `mbstring`, `openssl`, `fileinfo`, dan `zip`
 
-## Laravel Sponsors
+## Instalasi
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+Clone repository:
 
-### Premium Partners
+```bash
+git clone https://github.com/username/sim-pdam-desa.git
+cd sim-pdam-desa
+```
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+Install dependency PHP dan JavaScript:
 
-## Contributing
+```bash
+composer install
+npm install
+```
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+Buat file environment:
 
-## Code of Conduct
+```bash
+cp .env.example .env
+php artisan key:generate
+```
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+Atur database di file `.env`. Untuk SQLite, buat file database:
 
-## Security Vulnerabilities
+```bash
+touch database/database.sqlite
+```
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+Contoh konfigurasi SQLite:
 
-## License
+```env
+DB_CONNECTION=sqlite
+DB_DATABASE=/absolute/path/ke/project/database/database.sqlite
+```
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
-# SIM_PDAM_Desa
+Jalankan migrasi dan seeder:
+
+```bash
+php artisan migrate --seed
+```
+
+Buat symbolic link storage untuk akses foto meter:
+
+```bash
+php artisan storage:link
+```
+
+Build asset frontend:
+
+```bash
+npm run build
+```
+
+Jalankan aplikasi:
+
+```bash
+php artisan serve
+```
+
+Aplikasi akan berjalan di:
+
+```text
+http://127.0.0.1:8000
+```
+
+Untuk mode development frontend, jalankan Vite di terminal terpisah:
+
+```bash
+npm run dev
+```
+
+## Akun Demo
+
+Seeder menyediakan beberapa akun awal:
+
+| Role | Email | Password |
+| --- | --- | --- |
+| Admin | admin@pdam.desa | admin123 |
+| Petugas | petugas@pdam.desa | petugas123 |
+| Kasir | kasir@pdam.desa | kasir123 |
+| Pelanggan | budi@gmail.com | pelanggan123 |
+
+## Role dan Akses
+
+| Role | Akses |
+| --- | --- |
+| Admin | Dashboard, user, pelanggan, golongan tarif, pengaduan, tagihan, laporan |
+| Petugas | Pencatatan meter dan data pelanggan |
+| Kasir | Tagihan dan pembayaran |
+| Pelanggan | Portal pelanggan, tagihan pribadi, pembayaran, pengaduan, profil |
+
+## Perintah Berguna
+
+Menjalankan test:
+
+```bash
+php artisan test
+```
+
+Format kode PHP:
+
+```bash
+vendor/bin/pint
+```
+
+Clear cache konfigurasi:
+
+```bash
+php artisan config:clear
+php artisan cache:clear
+php artisan view:clear
+```
+
+Regenerate database dari awal:
+
+```bash
+php artisan migrate:fresh --seed
+```
+
+## Struktur Modul
+
+```text
+app/Http/Controllers   Controller aplikasi
+app/Http/Requests      Validasi request form
+app/Models             Model Eloquent
+app/Services           Logic bisnis tagihan, meter, pembayaran, laporan
+app/Exports            Export laporan Excel
+database/migrations    Struktur tabel database
+database/seeders       Data awal aplikasi
+resources/views        Halaman Blade
+routes/web.php         Route web aplikasi
+```
+
+## Export Laporan
+
+Aplikasi mendukung export:
+
+- PDF menggunakan `barryvdh/laravel-dompdf`
+- Excel menggunakan `maatwebsite/excel`
+
+Jenis laporan yang tersedia:
+
+- Laporan tagihan per periode
+- Laporan pembayaran berdasarkan rentang tanggal
+- Laporan pelanggan
+
+## Catatan Deployment
+
+Saat deploy ke server production:
+
+- Set `APP_ENV=production`
+- Set `APP_DEBUG=false`
+- Jalankan `composer install --no-dev --optimize-autoloader`
+- Jalankan `npm run build`
+- Jalankan `php artisan migrate --force`
+- Pastikan folder `storage` dan `bootstrap/cache` writable
+- Jalankan `php artisan storage:link` jika belum ada
+- Atur web server agar document root mengarah ke folder `public`
+
+## Lisensi
+
+Project ini menggunakan lisensi MIT.
