@@ -42,12 +42,12 @@ Route::middleware(['auth', 'check.status'])->group(function () {
     // Petugas routes (admin + petugas)
     Route::middleware('role:admin,petugas')->group(function () {
         Route::resource('meter', PencatatanMeterController::class);
-        Route::get('/pelanggan-list', [PelangganController::class, 'index'])->name('petugas.pelanggan');
-        Route::get('/pelanggan-list/{pelanggan}', [PelangganController::class, 'show'])->name('petugas.pelanggan.show');
+        // Route::get('/pelanggan-list', [PelangganController::class, 'index'])->name('petugas.pelanggan');
+        // Route::get('/pelanggan-list/{pelanggan}', [PelangganController::class, 'show'])->name('petugas.pelanggan.show');
     });
 
-    // Kasir routes (admin + kasir)
-    Route::middleware('role:admin,kasir')->group(function () {
+    // Tagihan & Pembayaran (admin + kasir + petugas)
+    Route::middleware('role:admin,kasir,petugas')->group(function () {
         Route::get('/tagihan', [TagihanController::class, 'index'])->name('tagihan.index');
         Route::get('/tagihan/{tagihan}', [TagihanController::class, 'show'])->name('tagihan.show');
         Route::resource('pembayaran', PembayaranController::class)->only(['index', 'create', 'store', 'show']);

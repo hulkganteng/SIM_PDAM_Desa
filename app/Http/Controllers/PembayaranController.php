@@ -42,18 +42,13 @@ class PembayaranController extends Controller
      */
     public function create(Request $request): View
     {
-        $tagihan = null;
-        $searchResults = collect();
+        $tagihanList = collect();
 
         if ($search = $request->input('search')) {
-            $searchResults = $this->paymentService->searchTagihan($search);
+            $tagihanList = $this->paymentService->searchTagihan($search);
         }
 
-        if ($tagihanId = $request->input('tagihan_id')) {
-            $tagihan = Tagihan::with('pelanggan')->find($tagihanId);
-        }
-
-        return view('pembayaran.create', compact('tagihan', 'searchResults'));
+        return view('pembayaran.create', compact('tagihanList'));
     }
 
     /**

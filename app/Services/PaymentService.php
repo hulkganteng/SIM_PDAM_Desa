@@ -62,18 +62,20 @@ class PaymentService
     }
 
     /**
-     * Search tagihan by no_sambungan or customer name.
+     * Search tagihan belum bayar by no_sambungan or customer name.
      *
      * @param string $query Search query
-     * @return Collection Matching tagihan with pelanggan relationship
+     * @return Collection Matching unpaid tagihan with pelanggan relationship
      */
     public function searchTagihan(string $query): Collection
     {
-        return Tagihan::whereHas('pelanggan', function ($q) use ($query) {
-            $q->where('no_sambungan', 'LIKE', "%{$query}%")
-              ->orWhere('nama', 'LIKE', "%{$query}%");
-        })
-        ->with('pelanggan')
-        ->get();
+        return Tagihan::where('status', 'belum_bayar')
+            ->whereHas('pelanggan', function ($q) use ($query) {
+                $q->where('no_sambungan', 'LIKE', "%{$query}%")
+                  ->orWhere('nama', 'LIKE', "%{$query}%");
+            })
+            ->with('pelanggan')
+            ->latest('jatuh_tempo')
+            ->get();
     }
 }
