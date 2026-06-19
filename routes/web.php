@@ -49,6 +49,7 @@ Route::middleware(['auth', 'check.status'])->group(function () {
     // Tagihan & Pembayaran (admin + kasir + petugas)
     Route::middleware('role:admin,kasir,petugas')->group(function () {
         Route::get('/tagihan', [TagihanController::class, 'index'])->name('tagihan.index');
+        Route::get('/tagihan/cetak-massal', [TagihanController::class, 'cetakMassal'])->name('tagihan.cetakMassal');
         Route::get('/tagihan/{tagihan}', [TagihanController::class, 'show'])->name('tagihan.show');
         Route::resource('pembayaran', PembayaranController::class)->only(['index', 'create', 'store', 'show']);
         Route::get('/pembayaran/{pembayaran}/receipt', [PembayaranController::class, 'receipt'])->name('pembayaran.receipt');
@@ -58,6 +59,7 @@ Route::middleware(['auth', 'check.status'])->group(function () {
     Route::middleware('role:pelanggan')->prefix('portal')->name('portal.')->group(function () {
         Route::get('/tagihan', [PortalController::class, 'tagihan'])->name('tagihan');
         Route::get('/tagihan/{tagihan}', [PortalController::class, 'showTagihan'])->name('tagihan.show');
+        Route::get('/pemakaian', [PortalController::class, 'pemakaian'])->name('pemakaian');
         Route::get('/pembayaran', [PortalController::class, 'pembayaran'])->name('pembayaran');
         Route::get('/pengaduan', [PortalController::class, 'pengaduan'])->name('pengaduan');
         Route::post('/pengaduan', [PortalController::class, 'storePengaduan'])->name('pengaduan.store');

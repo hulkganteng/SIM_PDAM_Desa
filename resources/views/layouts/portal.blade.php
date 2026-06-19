@@ -12,6 +12,7 @@
     @php
         $portalLinks = [
             ['url' => '/portal/tagihan', 'pattern' => 'portal/tagihan*', 'label' => 'Tagihan'],
+            ['url' => '/portal/pemakaian', 'pattern' => 'portal/pemakaian*', 'label' => 'Pemakaian'],
             ['url' => '/portal/pembayaran', 'pattern' => 'portal/pembayaran*', 'label' => 'Pembayaran'],
             ['url' => '/portal/pengaduan', 'pattern' => 'portal/pengaduan*', 'label' => 'Pengaduan'],
             ['url' => '/portal/profil', 'pattern' => 'portal/profil*', 'label' => 'Profil'],

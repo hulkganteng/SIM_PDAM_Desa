@@ -5,14 +5,22 @@
 @section('content')
     <div class="flex justify-between items-center mb-6">
         <h1 class="gov-page-title">Data Tagihan</h1>
-        @if(auth()->user()->role === 'admin')
-            <a href="{{ url('/tagihan/generate') }}" class="gov-btn-primary">
+        <div class="flex flex-wrap items-center justify-end gap-2">
+            <a href="{{ route('tagihan.cetakMassal', ['periode' => request('periode', now()->format('Y-m')), 'status' => request('status')]) }}" class="gov-btn-secondary" target="_blank">
                 <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 9V2h12v7M6 18H4a2 2 0 01-2-2v-5a2 2 0 012-2h16a2 2 0 012 2v5a2 2 0 01-2 2h-2m-12 0v4h12v-4M8 13h.01" />
                 </svg>
-                Generate Tagihan
+                Cetak Massal
             </a>
-        @endif
+            @if(auth()->user()->role === 'admin')
+                <a href="{{ url('/tagihan/generate') }}" class="gov-btn-primary">
+                    <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
+                    </svg>
+                    Generate Tagihan
+                </a>
+            @endif
+        </div>
     </div>
 
     {{-- Filters --}}

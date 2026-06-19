@@ -5,8 +5,10 @@ namespace App\Http\Controllers;
 use App\Http\Requests\GenerateTagihanRequest;
 use App\Models\Tagihan;
 use App\Services\BillingService;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Illuminate\View\View;
 
 class TagihanController extends Controller
@@ -50,6 +52,35 @@ class TagihanController extends Controller
         $tagihan->load(['pelanggan', 'pencatatanMeter', 'pembayaran']);
 
         return view('tagihan.show', compact('tagihan'));
+    }
+
+    /**
+     * Print all bills for a selected period.
+     */
+    public function cetakMassal(Request $request): Response
+    {
+        $validated = $request->validate([
+            'periode' => ['required', 'regex:/^\d{4}-\d{2}$/'],
+            'status' => ['nullable', 'in:belum_bayar,lunas'],
+        ]);
+
+        $query = Tagihan::with(['pelanggan.golonganTarif'])
+            ->where('periode', $validated['periode'])
+            ->orderBy('pelanggan_id');
+
+        if (! empty($validated['status'])) {
+            $query->where('status', $validated['status']);
+        }
+
+        $tagihan = $query->get();
+
+        $pdf = Pdf::loadView('exports.tagihan-massal-pdf', [
+            'tagihan' => $tagihan,
+            'periode' => $validated['periode'],
+            'status' => $validated['status'] ?? null,
+        ])->setPaper('a4');
+
+        return $pdf->stream("tagihan-massal-{$validated['periode']}.pdf");
     }
 
     /**

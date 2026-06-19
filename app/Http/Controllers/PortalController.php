@@ -76,6 +76,37 @@ class PortalController extends Controller
     }
 
     /**
+     * Display customer's water usage history.
+     */
+    public function pemakaian(): View
+    {
+        $pelanggan = $this->getPelanggan();
+        $pemakaian = $pelanggan->pencatatanMeters()
+            ->orderByDesc('periode')
+            ->paginate(12);
+
+        $chartData = $pelanggan->pencatatanMeters()
+            ->orderByDesc('periode')
+            ->limit(12)
+            ->get(['periode', 'pemakaian', 'meter_awal', 'meter_akhir'])
+            ->reverse()
+            ->values();
+
+        $totalPemakaian = $chartData->sum('pemakaian');
+        $rataRataPemakaian = $chartData->count() > 0 ? round($chartData->avg('pemakaian'), 1) : 0;
+        $pemakaianTertinggi = $chartData->max('pemakaian') ?? 0;
+
+        return view('portal.pemakaian', compact(
+            'pelanggan',
+            'pemakaian',
+            'chartData',
+            'totalPemakaian',
+            'rataRataPemakaian',
+            'pemakaianTertinggi'
+        ));
+    }
+
+    /**
      * Display customer's complaints.
      */
     public function pengaduan(): View
