@@ -30,8 +30,9 @@ class PencatatanMeterController extends Controller
         }
 
         $meters = $query->latest()->paginate(15)->withQueryString();
+        $pelanggan = Pelanggan::active()->get();
 
-        return view('meter.index', compact('meters'));
+        return view('meter.index', compact('meters', 'pelanggan'));
     }
 
     /**

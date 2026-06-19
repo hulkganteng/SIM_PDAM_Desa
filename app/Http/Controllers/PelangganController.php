@@ -37,8 +37,10 @@ class PelangganController extends Controller
         }
 
         $pelanggan = $query->latest()->paginate(15)->withQueryString();
+        $golongan = GolonganTarif::all();
+        $users = User::with('pelanggan')->where('role', 'pelanggan')->active()->get();
 
-        return view('pelanggan.index', compact('pelanggan'));
+        return view('pelanggan.index', compact('pelanggan', 'golongan', 'users'));
     }
 
     /**
